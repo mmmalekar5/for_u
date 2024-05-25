@@ -163,37 +163,61 @@ $('document').ready(function(){
 			$('#story').fadeIn('slow');
 		});
 	});
-	
 	$('#story').click(function(){
-		$(this).fadeOut('slow');
-		$('.cake').fadeOut('fast').promise().done(function(){
-			$('.message').fadeIn('slow');
-		});
-		
-		var i;
-
-		function msgLoop (i) {
-			$("p:nth-child("+i+")").fadeOut('slow').delay(800).promise().done(function(){
-			i=i+1;
-			$("p:nth-child("+i+")").fadeIn('slow').delay(1000);
-			if(i==50){
-				$("p:nth-child(49)").fadeOut('slow').promise().done(function () {
-					$('.cake').fadeIn('fast');
-				});
-				
-			}
-			else{
-				msgLoop(i);
-			}			
-
-		});
-			// body...
-		}
-		
-		msgLoop(0);
-		
+    		$(this).fadeOut('slow');
+    		$('.cake').fadeOut('fast').promise().done(function(){
+        		$('.message').fadeIn('slow');
+        		msgLoop(1); // Start the message loop with the first paragraph
+    		});
 	});
-});
+
+function msgLoop(i) {
+    if (i <= $(".message p").length) {
+        $(".message p:nth-child(" + i + ")").fadeIn('slow').delay(2000).fadeOut('slow').promise().done(function(){
+            i++;
+            msgLoop(i);
+        });
+    } else {
+        // When all messages are done, fade out the message container and fade in the cake
+        $('.message').fadeOut('slow').promise().done(function(){
+            $('.cake').fadeIn('fast');
+        });
+    }
+}
+
+
+	
+// 	$('#story').click(function(){
+// 		$(this).fadeOut('slow');
+// 		$('.cake').fadeOut('fast').promise().done(function(){
+// 			$('.message').fadeIn('slow');
+// 			msgLoop(1);
+// 		});
+		
+// 		var i;
+
+// 		function msgLoop (i) {
+// 			$("p:nth-child("+i+")").fadeOut('slow').delay(800).promise().done(function(){
+// 			i=i+1;
+// 			$("p:nth-child("+i+")").fadeIn('slow').delay(1000);
+// 			if(i==50){
+// 				$("p:nth-child(49)").fadeOut('slow').promise().done(function () {
+// 					$('.cake').fadeIn('fast');
+// 				});
+				
+// 			}
+// 			else{
+// 				msgLoop(i);
+// 			}			
+
+// 		});
+// 			// body...
+// 		}
+		
+// 		msgLoop(0);
+		
+// 	});
+// });
 
 
 
